@@ -7,14 +7,12 @@
     <title>hosts editor CMD</title>
     <authors>René Larch</authors>
     <owners>René Larch</owners>
-    <licenseUrl>https://raw.githubusercontent.com/r-Larch/Larch.Host/master/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/r-Larch/Larch.Host</projectUrl>
-    <!--<packageSourceUrl>https://github.com/r-Larch/Larch.Host</packageSourceUrl>-->
-    <projectSourceUrl>https://github.com/r-Larch/Larch.Host</projectSourceUrl>
+    <licenseUrl>https://github.com/r-Larch/Host/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/r-Larch/Host</projectUrl>
+    <projectSourceUrl>https://github.com/r-Larch/Host</projectSourceUrl>
     <bugTrackerUrl>https://github.com/r-Larch/Larch.Host/issues</bugTrackerUrl>
-    <docsUrl>https://github.com/r-Larch/Larch.Host/wiki</docsUrl>
-    <!--<mailingListUrl>mailto:renelarch@gmail.com?Subject=pr:Larch.Host</mailingListUrl>-->
-    <iconUrl>https://raw.githubusercontent.com/r-Larch/Larch.Host/master/Larch.Host/icon.hosts.png</iconUrl>
+    <docsUrl>https://github.com/r-Larch/Host</docsUrl>
+    <iconUrl>https://raw.githubusercontent.com/r-Larch/Host/master/src/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright 2017 René Larch</copyright>
 

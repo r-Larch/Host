@@ -64,7 +64,7 @@
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.hosts.png" />
+    <Content Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LarchConsole\src\LarchConsole.csproj">
