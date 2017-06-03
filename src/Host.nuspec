@@ -8,7 +8,7 @@
     <authors>René Larch</authors>
     <owners>René Larch</owners>
     <licenseUrl>https://github.com/r-Larch/Host/blob/master/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/r-Larch/Host</projectUrl>
+    <projectUrl>https://github.com/r-Larch/Larch</projectUrl>
     <projectSourceUrl>https://github.com/r-Larch/Host</projectSourceUrl>
     <bugTrackerUrl>https://github.com/r-Larch/Larch.Host/issues</bugTrackerUrl>
     <docsUrl>https://github.com/r-Larch/Host</docsUrl>
@@ -21,6 +21,7 @@
     <description>hosts is a commandline tool to manage your hosts.txt entries.</description>
 
     <releaseNotes>
+      Updated: .nuspec urls.
       New: Filter by domain, ip or line number.
       New: Use Wildcards or Regex to filter hostsfile.
       New: Colorized output for regex groubs.
