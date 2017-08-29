@@ -8,6 +8,9 @@ namespace Larch.Host.Models {
         [ValueOption(0)]
         public string Value { get; set; }
 
+        [ValueOption(1)]
+        public string Value2 { get; set; }
+
         [Option('e', "edit", HelpText = "Edit the hosts file in editor. set %EDITOR% to use your favorite editor.")]
         public bool Edit { get; set; }
 
@@ -37,6 +40,9 @@ namespace Larch.Host.Models {
 
         [Option('R', "regex", HelpText = "Use regex for filter")]
         public bool Regex { get; set; }
+
+        [Option('u', "duplicates", HelpText = "List duplicates")]
+        public bool Duplicates { get; set; }
 
         [Option('d', "debug", HelpText = "Enables debuging")]
         public bool Debug { get; set; }

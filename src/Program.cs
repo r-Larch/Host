@@ -62,6 +62,13 @@ namespace Larch.Host {
             }
 
             // list
+            if (options.Duplicates) {
+                filter.OnEmptyMatchAll = true;
+                host.Duplicates(filter, filterProp);
+                return;
+            }
+
+            // list
             if (options.List) {
                 filter.OnEmptyMatchAll = true;
                 host.List(filter, filterProp);
@@ -82,7 +89,9 @@ namespace Larch.Host {
 
             // add value
             if (options.Add || !string.IsNullOrEmpty(options.Value)) {
-                host.Add(options.Value);
+                var ip = string.IsNullOrEmpty(options.Value2) ? "127.0.0.1" : options.Value;
+                var url = string.IsNullOrEmpty(options.Value2) ? options.Value : options.Value2;
+                host.Add(ip, url);
                 return;
             }
         }

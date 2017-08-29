@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Larch.Host.Parser;
 using LarchConsole;
 
@@ -14,11 +15,23 @@ namespace Larch.Host.Contoller {
             _hostsFile = hostsFile;
         }
 
-        public void Add(string host) {
+        public void Add(string ip, string url) {
             string line;
             using (new Watch("add")) {
+                // throws if invalid
+                IPAddress.Parse(ip);
+
+                var host = url;
+                try {
+                    var uri = new Uri(url);
+                    host = uri.Host;
+                }
+                catch {
+                    // ignore
+                }
+
                 line = _hostsFile.Append(new FileLine() {
-                    Ip = "127.0.0.1",
+                    Ip = ip,
                     Domain = host.Trim()
                 });
             }
@@ -32,6 +45,44 @@ namespace Larch.Host.Contoller {
             Console.WriteLine("editor is starting...");
         }
 
+        public void Duplicates(Filter filter, FilterProp what) {
+            List<HostsFileLine> hosts;
+
+            using (new Watch("read file")) {
+                hosts = _hostsFile.GetHosts().ToList();
+            }
+
+            var filterd = Filter(hosts, filter, what);
+
+            var duplicates = (from f in filterd
+                group f by $"{f.Ip.Value} {f.Domain.Value}"
+                into g
+                where g.Count() > 1
+                select g).ToList();
+
+            ConsoleEx.PrintWithPaging(
+                list: duplicates,
+                countAll: hosts.Count,
+                line: (models, i) => new ConsoleWriter()
+                    .FormatLine("{count,5} {domain}", parms => parms
+                        .Add("count", models.Count())
+                        .Add("domain", models.Key)
+                    )
+                    .FormatLines("          {ip} {domain}", models.ToList(), (model, parms) => parms
+                        .Add("ip", model.Ip)
+                        .Add("domain", model.Domain)
+                    )
+            );
+
+            if (duplicates.Any()) {
+                var toremove = duplicates.SelectMany(x => x.Skip(1).Select(_ => _.Model)).ToList();
+                if (ConsoleEx.AskForYes($"remove {toremove.Count} duplicates?")) {
+                    _hostsFile.Remove(toremove);
+                    toremove.ForEach(x => Console.WriteLine($"removed: {HostsFile.CreateTextLine(x)}"));
+                }
+            }
+        }
+
         public void List(Filter filter, FilterProp what) {
             List<HostsFileLine> hosts;
 
@@ -41,10 +92,14 @@ namespace Larch.Host.Contoller {
 
             var filterd = Filter(hosts, filter, what);
 
+            Print(filterd, hosts.Count, what);
+        }
+
+        private void Print(List<HostModel> filterd, int countall, FilterProp what) {
             using (new Watch("print")) {
                 ConsoleEx.PrintWithPaging(
                     list: filterd,
-                    countAll: hosts.Count,
+                    countAll: countall,
                     header: ConsoleWriter.CreateLine(" Line |"),
                     line: (x, nr) => new ConsoleWriter()
                         .FormatLine("{line,6}|{disabled} {ip}   {domain}    {comment}", parms => parms
@@ -54,7 +109,7 @@ namespace Larch.Host.Contoller {
                             .Add("domain", x.Domain, what == FilterProp.Domain)
                             .Add("comment", x.Commentar, what == FilterProp.Commentar)
                         )
-                    );
+                );
             }
         }
 
